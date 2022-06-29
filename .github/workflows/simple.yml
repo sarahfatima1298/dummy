@@ -38,6 +38,7 @@ jobs:
       - run: echo Run deployment.
         
   test:
+    environment: dev
     needs: deploy
     name: Test
     runs-on: ubuntu-latest
