@@ -20,6 +20,20 @@ jobs:
     steps:
       - run: echo Run integration tests.
       
+  artifacts:
+    needs: integrationTest
+    name: Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Run artifacts.
+  
+  softwareQuality:
+    needs: artifacts
+    name: Software Quality
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Run Software Quality.
+      
   deploy:
     environment: dev
     needs: integrationTest
