@@ -36,7 +36,7 @@ jobs:
       
   deploy:
     environment: dev
-    needs: integrationTest
+    needs: softwareQuality
     name: Deploy
     runs-on: ubuntu-latest
     steps:
