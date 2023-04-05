@@ -19,3 +19,4 @@ commit 1
 =======
 >>>>>>> d0e8104 (commit 1)
 commit 1
+commit 2
