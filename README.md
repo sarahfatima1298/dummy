@@ -14,4 +14,7 @@ testing final
 testing
 do 
 commit 1
+<<<<<<< HEAD
+>>>>>>> d0e8104 (commit 1)
+=======
 >>>>>>> d0e8104 (commit 1)
