@@ -10,6 +10,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - run: sleep 3
       - run: echo Run deployment.
         
   test:
@@ -18,4 +19,5 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - run: sleep 3
       - run: echo Run deployment.
