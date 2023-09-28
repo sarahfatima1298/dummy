@@ -1,9 +1,7 @@
 name: Parallel and Conditional Jobs
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,37 +9,54 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Build application
-      run: |
-        # Your build commands here
+      - run: echo Run Build
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+      
+      - name: Run JUnit Tests
+        run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
 
   test:
     name: Test
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Run tests
-      run: |
-        # Your test commands here
+      - run: echo Run Test
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     needs: [build, test] # This job depends on 'build' and 'test' jobs
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Deploy application
-      run: |
-        # Your deployment commands here
+      - run: echo Run Deploy
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
 
   release:
     name: Release
@@ -49,12 +64,10 @@ jobs:
     needs: [build]
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Create release
-      run: |
-        # Your release commands here
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - run: echo Finish release'
 
 # Define a conditional job that runs only if 'test' job fails
   notify_failure:
@@ -64,8 +77,8 @@ jobs:
     if: failure() # This job runs only if 'test' job fails
 
     steps:
-    - name: Notify team on failure
-      run: echo "Test job failed, please investigate."
+      - name: Notify team on failure
+        run: echo "Test job failed, please investigate."
 
 # Define parallel jobs that run concurrently
   parallel_jobs:
@@ -93,25 +106,33 @@ jobs:
           name: Job 8
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Run parallel job
-      run: |
-        if [[ ${{ matrix.name }} == "Job 1" ]]; then
-          # Commands for Job 1
-        elif [[ ${{ matrix.name }} == "Job 2" ]]; then
-          # Commands for Job 2
-        elif [[ ${{ matrix.name }} == "Job 3" ]]; then
-          # Commands for Job 3
-        elif [[ ${{ matrix.name }} == "Job 4" ]]; then
-          # Commands for Job 4
-        elif [[ ${{ matrix.name }} == "Job 5" ]]; then
-          # Commands for Job 5
-        elif [[ ${{ matrix.name }} == "Job 6" ]]; then
-          # Commands for Job 6
-        elif [[ ${{ matrix.name }} == "Job 7" ]]; then
-          # Commands for Job 7
-        elif [[ ${{ matrix.name }} == "Job 8" ]]; then
-          # Commands for Job 8
-        fi
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Run parallel job
+        run: |
+          if [[ ${{ matrix.name }} == "Job 1" ]]; then
+            echo "Running Job 1"
+            # Commands for Job 1
+          elif [[ ${{ matrix.name }} == "Job 2" ]]; then
+            echo "Running Job 2"
+            # Commands for Job 2
+          elif [[ ${{ matrix.name }} == "Job 3" ]]; then
+            echo "Running Job 3"
+            # Commands for Job 3
+          elif [[ ${{ matrix.name }} == "Job 4" ]]; then
+            echo "Running Job 4"
+            # Commands for Job 4
+          elif [[ ${{ matrix.name }} == "Job 5" ]]; then
+            echo "Running Job 5"
+            # Commands for Job 5
+          elif [[ ${{ matrix.name }} == "Job 6" ]]; then
+            echo "Running Job 6"
+            # Commands for Job 6
+          elif [[ ${{ matrix.name }} == "Job 7" ]]; then
+            echo "Running Job 7"
+            # Commands for Job 7
+          elif [[ ${{ matrix.name }} == "Job 8" ]]; then
+            echo "Running Job 8"
+            # Commands for Job 8
+          fi
