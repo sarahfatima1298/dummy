@@ -87,51 +87,28 @@ jobs:
 
     strategy:
       matrix:
-        job1:
-          name: Job 1
-        job2:
-          name: Job 2
-        job3:
-          name: Job 3
-        job4:
-          name: Job 4
-        job5:
-          name: Job 5
-        job6:
-          name: Job 6
-        job7:
-          name: Job 7
-        job8:
-          name: Job 8
+        job1: [1]
+        job2: [2]
+        job3: [3]
+        job4: [4]
+        job5: [5]
+        job6: [6]
+        job7: [7]
+        job8: [8]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
   
-      - name: Run parallel job
+      - name: Run parallel job with echo
         run: |
-          if [[ ${{ matrix.name }} == "Job 1" ]]; then
-            echo "Running Job 1"
-            # Commands for Job 1
-          elif [[ ${{ matrix.name }} == "Job 2" ]]; then
-            echo "Running Job 2"
-            # Commands for Job 2
-          elif [[ ${{ matrix.name }} == "Job 3" ]]; then
-            echo "Running Job 3"
-            # Commands for Job 3
-          elif [[ ${{ matrix.name }} == "Job 4" ]]; then
-            echo "Running Job 4"
-            # Commands for Job 4
-          elif [[ ${{ matrix.name }} == "Job 5" ]]; then
-            echo "Running Job 5"
-            # Commands for Job 5
-          elif [[ ${{ matrix.name }} == "Job 6" ]]; then
-            echo "Running Job 6"
-            # Commands for Job 6
-          elif [[ ${{ matrix.name }} == "Job 7" ]]; then
-            echo "Running Job 7"
-            # Commands for Job 7
-          elif [[ ${{ matrix.name }} == "Job 8" ]]; then
-            echo "Running Job 8"
-            # Commands for Job 8
-          fi
+          case ${{ matrix.name }} in
+            job1) echo "Running Job 1";;
+            job2) echo "Running Job 2";;
+            job3) echo "Running Job 3";;
+            job4) echo "Running Job 4";;
+            job5) echo "Running Job 5";;
+            job6) echo "Running Job 6";;
+            job7) echo "Running Job 7";;
+            job8) echo "Running Job 8";;
+          esac
