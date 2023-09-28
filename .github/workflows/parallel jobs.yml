@@ -66,7 +66,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
   
-      - run: echo Finish release'
+      - run: echo Finish release
 
 # Define a conditional job that runs only if 'test' job fails
   notify_failure:
