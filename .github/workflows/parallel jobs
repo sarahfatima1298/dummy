@@ -1,0 +1,117 @@
+name: Parallel and Conditional Jobs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build application
+      run: |
+        # Your build commands here
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run tests
+      run: |
+        # Your test commands here
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [build, test] # This job depends on 'build' and 'test' jobs
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy application
+      run: |
+        # Your deployment commands here
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create release
+      run: |
+        # Your release commands here
+
+# Define a conditional job that runs only if 'test' job fails
+  notify_failure:
+    name: Notify on Failure
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: failure() # This job runs only if 'test' job fails
+
+    steps:
+    - name: Notify team on failure
+      run: echo "Test job failed, please investigate."
+
+# Define parallel jobs that run concurrently
+  parallel_jobs:
+    name: Parallel Jobs
+    runs-on: ubuntu-latest
+    needs: [build] # These jobs depend on 'build' job
+
+    strategy:
+      matrix:
+        job1:
+          name: Job 1
+        job2:
+          name: Job 2
+        job3:
+          name: Job 3
+        job4:
+          name: Job 4
+        job5:
+          name: Job 5
+        job6:
+          name: Job 6
+        job7:
+          name: Job 7
+        job8:
+          name: Job 8
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run parallel job
+      run: |
+        if [[ ${{ matrix.name }} == "Job 1" ]]; then
+          # Commands for Job 1
+        elif [[ ${{ matrix.name }} == "Job 2" ]]; then
+          # Commands for Job 2
+        elif [[ ${{ matrix.name }} == "Job 3" ]]; then
+          # Commands for Job 3
+        elif [[ ${{ matrix.name }} == "Job 4" ]]; then
+          # Commands for Job 4
+        elif [[ ${{ matrix.name }} == "Job 5" ]]; then
+          # Commands for Job 5
+        elif [[ ${{ matrix.name }} == "Job 6" ]]; then
+          # Commands for Job 6
+        elif [[ ${{ matrix.name }} == "Job 7" ]]; then
+          # Commands for Job 7
+        elif [[ ${{ matrix.name }} == "Job 8" ]]; then
+          # Commands for Job 8
+        fi
