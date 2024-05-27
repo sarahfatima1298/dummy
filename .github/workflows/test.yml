@@ -18,6 +18,7 @@ jobs:
     name: Integration Tests
     runs-on: ubuntu-latest
     steps:
+      - run: sleep 30
       - run: echo Run integration tests.
       
   deploy:
