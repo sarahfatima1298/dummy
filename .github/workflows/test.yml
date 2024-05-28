@@ -1,8 +1,8 @@
 name: cicdTest
 
 on:
-  push:
-    branches: ['master']
+  # push:
+  #   branches: ['master']
   workflow_dispatch:
 
 jobs:
@@ -20,8 +20,8 @@ jobs:
     steps:
       - run: sleep 10
       - run: echo Run integration tests.
-      - name: Try to fail
-        run: exit 1
+      # - name: Try to fail
+      #   run: exit 1
       
   deploy:
     needs: integrationTest
