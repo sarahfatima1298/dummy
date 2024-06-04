@@ -25,10 +25,11 @@ jobs:
       
   deploy:
     needs: integrationTest
-    environment: dev
+    #environment: dev
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - run: sleep 10
       - run: echo Run deployment.
       - name: Checkout Code
         uses: actions/checkout@v2
