@@ -34,7 +34,10 @@ jobs:
   job4:
     name: Job 4
     runs-on: ubuntu-latest
+    if: always()
     needs: job3
     steps:
-      - name: Step 1 in Job 4
-        run: echo "Running Job 4"
+      - name: Step 1 in Job 4 - Waiting for 30 seconds
+        run: echo "Waiting for 30 seconds..." && sleep 60
+      - name: Step 2 in Job 4 - Actual Execution
+        run: echo "Running Job 4 after waiting"
