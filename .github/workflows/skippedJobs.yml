@@ -34,8 +34,6 @@ jobs:
   job4:
     name: Job 4
     runs-on: ubuntu-latest
-    if: ${{ needs.job3.result == 'success' || needs.job3.result == 'skipped' }}
-    needs: job3
     steps:
       - name: Step 1 in Job 4 - Waiting for 30 seconds
         run: echo "Waiting for 30 seconds..." && sleep 60
