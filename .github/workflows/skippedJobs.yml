@@ -33,6 +33,8 @@ jobs:
 
   job4:
     name: Job 4
+    if: ${{ always() }}
+    needs: job3
     runs-on: ubuntu-latest
     steps:
       - name: Step 1 in Job 4 - Waiting for 30 seconds
