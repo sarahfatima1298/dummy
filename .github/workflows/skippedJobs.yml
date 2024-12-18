@@ -13,6 +13,7 @@ jobs:
       - name: Step 1 in Job 1
         run: echo "Running Job 1"
 
+  # Parallel Skipped Jobs
   job2:
     name: Job 2 (Always Skipped)
     runs-on: ubuntu-latest
@@ -26,7 +27,7 @@ jobs:
     name: Job 3 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
-    needs: job2
+    needs: job1
     steps:
       - name: Step 1 in Job 3
         run: echo "This should not run"
@@ -34,16 +35,17 @@ jobs:
   job4:
     name: Job 4
     runs-on: ubuntu-latest
-    needs: job3  # Job 4 depends on Job 3
-    if: ${{ always() }}  # Ensures that job4 runs no matter what happens with job3
+    needs: [job2, job3]  # Job 4 depends on Job 2 and Job 3, running them in parallel
+    if: ${{ always() }}  # Ensures that job4 runs no matter what happens with job2 and job3
     steps:
       - name: Step 1 in Job 4 - Waiting for 30 seconds
-        run: echo "Waiting for 30 seconds..." #&& sleep 60
-      # - name: Step 2 in Job 4 - Always Fail
-      #   run: |
-      #     echo "This job is forced to fail."
-      #     exit 1  # Force the job to fail every time
+        run: echo "Waiting for 30 seconds..." && sleep 60
+      - name: Step 2 in Job 4 - Always Fail
+        run: |
+          echo "This job is forced to fail."
+          exit 1  # Force the job to fail every time
 
+  # More Parallel Skipped Jobs
   job5:
     name: Job 5 (Always Skipped)
     runs-on: ubuntu-latest
@@ -57,16 +59,17 @@ jobs:
     name: Job 6 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
-    needs: job5
+    needs: job4
     steps:
       - name: Step 1 in Job 6
         run: echo "This should not run"
 
+  # Sequential Skipped Jobs
   job7:
     name: Job 7 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
-    needs: job6
+    needs: [job5, job6]  # Job 7 depends on job5 and job6
     steps:
       - name: Step 1 in Job 7
         run: echo "This should not run"
@@ -75,11 +78,12 @@ jobs:
     name: Job 8 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
-    needs: job7
+    needs: job7  # Job 8 depends on job7
     steps:
       - name: Step 1 in Job 8
         run: echo "This should not run"
 
+  # More Parallel Skipped Jobs
   job9:
     name: Job 9 (Always Skipped)
     runs-on: ubuntu-latest
@@ -93,26 +97,25 @@ jobs:
     name: Job 10 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
-    needs: job9
+    needs: job8
     steps:
       - name: Step 1 in Job 10
         run: echo "This should not run"
 
+  # Sequential Jobs
   job11:
-    name: Job 11 (Always Skipped)
+    name: Job 11
     runs-on: ubuntu-latest
-    if: false  # This ensures the job is always skipped
-    needs: job10
+    needs: [job9, job10]  # Job 11 depends on job9 and job10
     steps:
       - name: Step 1 in Job 11
-        run: echo "This should not run"
+        run: echo "Running Job 11 after job9 and job10"
 
   job12:
     name: Job 12
     runs-on: ubuntu-latest
-    needs: job11  # Job 12 depends on Job 11
+    needs: job11  # Job 12 depends on job11
     if: ${{ always() }}  # Ensures that job12 runs no matter what happens with job11
     steps:
       - name: Step 1 in Job 12
         run: echo "Running Job 12 after job11"
-
