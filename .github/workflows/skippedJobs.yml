@@ -34,7 +34,7 @@ jobs:
   job4:
     name: Job 4
     runs-on: ubuntu-latest
-    if: skipped()
+    if: true
     needs: job3
     steps:
       - name: Step 1 in Job 4 - Waiting for 30 seconds
