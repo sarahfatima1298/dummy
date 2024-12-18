@@ -1,4 +1,4 @@
-name: Sequential Jobs Workflow
+name: Skipped Jobs Workflow
 
 on:
   push:
@@ -39,7 +39,3 @@ jobs:
     steps:
       - name: Step 1 in Job 4 - Waiting for 30 seconds
         run: echo "Waiting for 30 seconds..." # && sleep 60
-      - name: Step 2 in Job 4 - Always Fail
-        run: |
-          echo "This job is forced to fail."
-          exit 1  # Force the job to fail every time
