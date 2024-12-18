@@ -17,6 +17,7 @@ jobs:
     name: Job 2 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
+    needs: job1
     steps:
       - name: Step 1 in Job 2
         run: echo "This should not run"
@@ -25,6 +26,7 @@ jobs:
     name: Job 3 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
+    needs: job2
     steps:
       - name: Step 1 in Job 3
         run: echo "This should not run"
@@ -32,6 +34,7 @@ jobs:
   job4:
     name: Job 4
     runs-on: ubuntu-latest
+    needs: job3
     steps:
       - name: Step 1 in Job 4
         run: echo "Running Job 4"
