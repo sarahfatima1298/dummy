@@ -1,4 +1,4 @@
-name: Example Workflow
+name: Skipped Jobs Workflow
 
 on:
   push:
