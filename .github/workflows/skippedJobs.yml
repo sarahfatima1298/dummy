@@ -35,7 +35,7 @@ jobs:
   job4:
     name: Job 4
     runs-on: ubuntu-latest
-    needs: [job2, job3]  # Job 4 depends on Job 2 and Job 3, running them in parallel
+    needs: job2  # Job 4 depends on Job 2 and Job 3, running them in parallel
     if: ${{ always() }}  # Ensures that job4 runs no matter what happens with job2 and job3
     steps:
       - name: Step 1 in Job 4 - Waiting for 30 seconds
@@ -69,7 +69,7 @@ jobs:
     name: Job 7 (Always Skipped)
     runs-on: ubuntu-latest
     if: false  # This ensures the job is always skipped
-    needs: [job5, job6]  # Job 7 depends on job5 and job6
+    needs: job6  # Job 7 depends on job5 and job6
     steps:
       - name: Step 1 in Job 7
         run: echo "This should not run"
@@ -106,7 +106,7 @@ jobs:
   job11:
     name: Job 11
     runs-on: ubuntu-latest
-    needs: [job9, job10]  # Job 11 depends on job9 and job10
+    needs: job9  # Job 11 depends on job9 and job10
     steps:
       - name: Step 1 in Job 11
         run: echo "Running Job 11 after job9 and job10"
