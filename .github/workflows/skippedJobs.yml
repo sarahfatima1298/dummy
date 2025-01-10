@@ -114,7 +114,10 @@ jobs:
   job12:
     name: Job 12
     runs-on: ubuntu-latest
+    if: ${{ !cancelled() }}
     needs: job11  # Job 12 depends on job11
     steps:
       - name: Step 1 in Job 12
         run: echo "Running Job 12 after job11"
+      - name: Step 1 in Job 4 - Waiting for 30 seconds
+        run: echo "Waiting for 30 seconds..." && sleep 60
