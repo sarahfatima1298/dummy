@@ -50,7 +50,8 @@ jobs:
     name: 'ServiceNow DevOps Change Automation'
     steps:
       - name: ServiceNow Change
-        uses: ServiceNow/servicenow-devops-change@a970f84ddc469bafe6c830da617f32ed1c246096
+        # uses: ServiceNow/servicenow-devops-change@a970f84ddc469bafe6c830da617f32ed1c246096
+        uses: sarahfatima1298/servicenow-devops-change@496137eb32c106e2375d386a48344b8789526a63
         with:
           # Devops Integration Token
           devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
